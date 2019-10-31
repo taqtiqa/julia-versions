@@ -1,10 +1,10 @@
-# ruby-versions
+# julia-versions
 
-A common repository of ruby version metadata.
+A common repository of julia version metadata.
 
 ## Directory Structure
 
-* `[ruby]/`
+* `[julia]/`
   * `versions.txt` - an exhaustive list of every released version.
     Versions must be listed in natural order.
   * `stable.txt` - a list of current stable versions.
@@ -20,6 +20,18 @@ A common repository of ruby version metadata.
 
 ## Contributing
 
-See the [CONTRIBUTING][1] file.
+Use `update.sh`, or manually do the following:
 
-[1]: https://github.com/postmodern/ruby-versions/blob/master/CONTRIBUTING.md#contributing
+1. Add the new version to `versions.txt`.
+  * Versions should be listed incrementally.
+2. Add new _stable_ versions to `stable.txt`, replacing any previous stable
+   version for that version family.
+  * Should only contain the latest stable version for each version family.
+3. Append the MD5 checksums for _all_ released files to `checksums.md5`.
+4. Append the SHA1 checksums for _all_ released files to `checksums.sha1`.
+5. Append the SHA256 checksums for _all_ released files to `checksums.sha256`.
+6. Append the SHA512 checksums for _all_ released files to `checksums.sha512`.
+
+* Never remove a version from `versions.txt`.
+* Never remove checksums from a `checksum.*` file. Unless the file is literally
+  no longer available on the Internet.

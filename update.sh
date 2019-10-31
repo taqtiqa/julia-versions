@@ -3,20 +3,20 @@
 set -e
 
 if [[ ! $# -eq 2 ]]; then
-	echo "usage: $0 [ruby|mruby|jruby|rubinius|truffleruby] [VERSION]"
+	echo "usage: $0 [julia] [VERSION]"
 	exit 1
 fi
 
-ruby="$1"
+julia="$1"
 version="$2"
 dest="pkg"
 
-case "$ruby" in
-	ruby)
+case "$julia" in
+	julia)
 		version_family="${version:0:3}"
 
 		exts=(tar.gz tar.bz2 tar.xz zip)
-		downloads_url="https://cache.ruby-lang.org/pub/ruby"
+		downloads_url="https://cache.julia-lang.org/pub/julia"
 		;;
 	mruby)
 		exts=(tar.gz zip)
@@ -35,7 +35,7 @@ case "$ruby" in
 		downloads_url="https://github.com/oracle/truffleruby/releases/download"
 		;;
 	*)
-		echo "$0: unknown ruby: $ruby" >&2
+		echo "$0: unknown julia: $julia" >&2
 		exit 1
 		;;
 esac
@@ -44,9 +44,9 @@ mkdir -p "$dest"
 pushd "$dest" >/dev/null
 
 for ext in "${exts[@]}"; do
-	case "$ruby" in
-		ruby)
-			archive="ruby-${version}.${ext}"
+	case "$julia" in
+		julia)
+			archive="julia-${version}.${ext}"
 			url="$downloads_url/$version_family/$archive"
 			;;
 		mruby)
@@ -74,14 +74,14 @@ for ext in "${exts[@]}"; do
 	fi
 
 	for algorithm in md5 sha1 sha256 sha512; do
-		${algorithm}sum "$archive" >> "../$ruby/checksums.$algorithm"
+		${algorithm}sum "$archive" >> "../$julia/checksums.$algorithm"
 	done
 done
 
-echo "$version" >> "../$ruby/versions.txt"
+echo "$version" >> "../$julia/versions.txt"
 
-if [[ $(wc -l < "../$ruby/stable.txt") == "1" ]]; then
-	echo "$version" > "../$ruby/stable.txt"
+if [[ $(wc -l < "../$julia/stable.txt") == "1" ]]; then
+	echo "$version" > "../$julia/stable.txt"
 fi
 
 popd >/dev/null
