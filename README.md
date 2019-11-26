@@ -27,5 +27,5 @@ Use `update.sh`, or manually do the following:
 4. Save the GPG signature file for _all_ released files to `julia/signatures`.
 
 * Never remove a version from `versions.txt`.
-* Never remove checksums from a `signatures.*` file. Unless the file is literally
-  no longer available on the Internet.
+* Never remove checksums from a `signatures.*` file. Unless the file is
+  literally no longer available on the Internet.

@@ -15,24 +15,8 @@ case "$julia" in
 	julia)
 		version_family="${version:0:3}"
 
-		exts=(tar.gz tar.bz2 tar.xz zip)
+		exts=(tar.gz)
 		downloads_url="https://cache.julia-lang.org/pub/julia"
-		;;
-	mruby)
-		exts=(tar.gz zip)
-		downloads_url="https://github.com/mruby/mruby/archive"
-		;;
-	jruby)
-		exts=(tar.gz zip)
-		downloads_url="https://s3.amazonaws.com/jruby.org/downloads"
-		;;
-	rubinius)
-		exts=(tar.bz2)
-		downloads_url="https://rubinius-releases-rubinius-com.s3.amazonaws.com"
-		;;
-	truffleruby)
-		exts=(linux-amd64.tar.gz macos-amd64.tar.gz)
-		downloads_url="https://github.com/oracle/truffleruby/releases/download"
 		;;
 	*)
 		echo "$0: unknown julia: $julia" >&2
