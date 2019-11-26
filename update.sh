@@ -13,10 +13,9 @@ dest="pkg"
 
 case "$julia" in
 	julia)
-		version_family="${version:0:3}"
-
+		version_family="v${version}"
 		exts=(tar.gz)
-		downloads_url="https://cache.julia-lang.org/pub/julia"
+		downloads_url="https://github.com/JuliaLang/julia/releases/download"
 		;;
 	*)
 		echo "$0: unknown julia: $julia" >&2
@@ -30,24 +29,16 @@ pushd "$dest" >/dev/null
 for ext in "${exts[@]}"; do
 	case "$julia" in
 		julia)
+		  #/v1.3.0-rc5/julia-1.3.0-rc5.tar.gz
 			archive="julia-${version}.${ext}"
 			url="$downloads_url/$version_family/$archive"
+		  #/v1.3.0-rc5/julia-1.3.0-rc5-full.tar.gz
+			archive_full="julia-${version}-full.${ext}"
+			url_full="$downloads_url/$version_family/$archive_full"
 			;;
-		mruby)
-			archive="mruby-${version}.${ext}"
-			url="$downloads_url/$version/$archive"
-			;;
-		jruby)
-			archive="jruby-bin-${version}.${ext}"
-			url="$downloads_url/$version/$archive"
-			;;
-		rubinius)
-			archive="rubinius-${version}.${ext}"
-			url="$downloads_url/$archive"
-			;;
-		truffleruby)
-			archive="truffleruby-${version}-${ext}"
-			url="$downloads_url/vm-$version/$archive"
+		*)
+			echo 'Unknown Julia.'
+			exit 1
 			;;
 	esac
 
@@ -57,8 +48,9 @@ for ext in "${exts[@]}"; do
 		wget -O "$archive" "$url"
 	fi
 
-	for algorithm in md5 sha1 sha256 sha512; do
-		${algorithm}sum "$archive" >> "../$julia/checksums.$algorithm"
+	for algorithm in gpg; do
+		echo "1  $archive" >> "../$julia/signatures.$algorithm"
+		echo "1  $archive_full" >> "../$julia/signatures.$algorithm"
 	done
 done
 
