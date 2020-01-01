@@ -4,6 +4,7 @@ set -e
 
 if [[ ! $# -eq 2 ]]; then
 	echo "usage: $0 [julia] [VERSION]"
+	echo 'update.sh julia 1.3.1'
 	exit 1
 fi
 
